@@ -1,0 +1,124 @@
+.eidtArea{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  .ghost{
+    color: #1960FF;
+  }
+  .topNav{
+    width: 100%;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #F8F8F8;
+    &-l{
+      flex: 1;
+    }
+  }
+  .editpannel{
+    flex: 1;
+    position: relative;
+    background: #f7f8fa;
+    overflow: auto;
+    display: flex;
+    &-l{
+      display: flex;
+      width: 340px;
+      flex: 0 0 340px;
+      min-height: 730px;
+      background: #FFFFFF;
+    }
+    .editMenus{
+      width: 60px;
+      flex: 0 0 60px;
+      border-right: 1px solid #F8F8F8;
+    }
+    .menusitem{
+      width: 100%;
+      margin-top: 30px;
+      text-align: center;
+      font-size: 10px;
+      cursor: pointer;
+      color: #999999;
+      img{
+        width: 18px;
+        margin-bottom: 8px;
+      }
+    }
+    .curType{
+      position: relative;
+      color: #1960FF;
+      &:before{
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 40px;
+        background: #1960FF;
+      }
+    }
+    .menusOptions{
+      flex: 0 0 280px;
+      width: 280px;
+      box-shadow: 4px 0px 6px -2px rgba(46, 51, 64, 0.04);
+    }
+    &-r{
+      overflow: auto;
+      flex: 0 0 280px;
+      width: 280px;
+      min-height: 730px;
+      background: #FFFFFF;
+      box-shadow: -4px 0px 6px -2px rgba(46, 51, 64, 0.02);
+    }
+    &-c{
+      flex: 1;
+      min-width: 400px;
+    }
+    .perviewArea{
+      width: 375px;
+      height: 667px;
+      margin: 64px auto;
+      position: relative;
+      background: #fff;
+    }
+    .menuDragArea{
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      opacity: 0;
+    }
+  }
+}
+.newitem{
+  position: absolute;
+  display: inline-block;
+  touch-action: none;
+  transform: translate(0px, 0px);
+  transition: background-color 0.3s;
+  border: 0.8px dashed #ddd;
+  box-sizing: border-box;
+  border-radius: 4px;
+  &-content{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+}
+.curitem{
+  border: 0.8px dashed #1960FF;
+}
+.list-group-item{
+  cursor: move;
+}

@@ -1,0 +1,6 @@
+node_modules
+*.md
+*.scss
+*.woff
+*.ttf
+babel.config.js
