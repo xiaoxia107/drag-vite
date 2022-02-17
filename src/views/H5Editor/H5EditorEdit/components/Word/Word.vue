@@ -1,30 +1,21 @@
 <template>
-<div class="word">
-  {{  editItem }}
-    <!-- <textarea  type="textarea" v-model="label"> -->
-</div>
+    <div class="word">
+        <el-input :class="classes[editItem.value].class" ref="input" :autosize="true" type="textarea" v-model="label"  resize="none" @click.stop></el-input>
+    </div>
 </template>
 
 <script>
+import Word from "./Word.js"
 export default {
-    name: 'Word',
-    props: {
-        editItem: Object
-    },
-    data (){
-        return{
-            label: ''
-        }
-    },
-    mounted () {
-        this.label = this.editItem.label
-    },
+    ...Word
 }
 </script>
 
-<style scoped>
-textarea{
+<style lang="scss" scoped>
+@import './Word.scss';
+::v-deep .el-textarea__inner {
     border: none;
     outline: none;
+    background: none;
 }
 </style>

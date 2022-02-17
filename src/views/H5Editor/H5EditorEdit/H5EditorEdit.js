@@ -1,13 +1,16 @@
 import interact from 'interactjs'
 import _ from 'lodash'
+import uuid from '@/utils/uuid'
 import vuedraggable from 'vuedraggable'
-import { menuList, menuOptions } from '@/utils/H5EditorOptions'
-import PannelR from './components/PannelR/PannelR'
-import ShapeController from './components/ShapeController/ShapeController'
-import Word from './components/Word/Word'
+import { menuList, menuOptions } from '../Options/MenuOption/index'
+import PannelR from './components/PannelR/PannelR.vue'
+import ShapeController from './components/ShapeController/ShapeController.vue'
+import Word from './components/Word/Word.vue'
 import TopNav from './components/TopNav/TopNav'
-import Perview from './components/Perview/Perview'
-
+import Perview from '@/components/H5EditorPerview/H5EditorPerview'
+import MenuWord from './components/MenuComponent/MenuWord'
+import MenuCustom from './components/MenuComponent/MenuCustom'
+import CustomView from './components/CustomView/Index'
 export default {
     name: 'H5EditorEdit',
     components: {
@@ -16,15 +19,18 @@ export default {
         ShapeController,
         Word,
         TopNav,
-        Perview
+        Perview,
+        MenuWord,
+        MenuCustom,
+        CustomView
     },
     data () {
         return {
-            curType: 1,
+            curType: 4,
             menuList: _.cloneDeep(menuList),
             curDropTarget: null,
             zoomList: [],
-            List: [],
+            List: _.cloneDeep(menuList),
             componentList: [],
             menuOptions: _.cloneDeep(menuOptions),
             curEditItem: null,
@@ -53,6 +59,7 @@ export default {
             this.curIdx = null
         },
         handleItemClick (item, idx) {
+            console.log(item)
             this.curEditItem = item
             this.curIdx = idx
         },
@@ -62,29 +69,27 @@ export default {
         },
         onAdd (evt) {
             let parent = document.getElementById('perviewArea')
-            let x = evt.originalEvent.clientX - parent.offsetLeft
-            let y = evt.originalEvent.clientY - (parent.offsetTop + 108)
-            let w = 200
-            let h = 50
-
             let type = evt.item.dataset.type
+            let value = evt.item.dataset.value
+            let element = this.menuOptions[type].subMenu.find(item => {
+                return item.value == value
+            })
+            let obj = _.cloneDeep(element)
+            let x = evt.originalEvent.clientX - (parent.offsetLeft + 50)
+            let y = evt.originalEvent.clientY - (parent.offsetTop + 108)
+            let w = obj.style.width
+            let h = obj.style.height
             let params = {
-                id: new Date().getTime(),
+                id: uuid(),
                 x: x,
                 y: y,
                 w: w,
                 h: h,
                 zIndex: 999,
-                type: type,
-                value: evt.item.dataset.value,
-                label: evt.item.innerHTML
+                ...obj
             }
-
+            console.log('params', params)
             this.componentList.push(params)
-            this.$nextTick(() => {
-                let target = document.getElementById(params.id)
-                this.setPos(target, x, y, w, h)
-            })
         },
         setPos (target, x, y, w, h) {
             target.setAttribute('data-x', x)
@@ -148,6 +153,14 @@ export default {
                 let h = (parseFloat(target.getAttribute('data-h')) || event.rect.height)
                 self.setPos(target, x, y, w, h)
             }
+        },
+        //编辑字体
+        changeWord (item) {
+            this.componentList.forEach(ite => {
+                if (ite.id == item.id) {
+                    ite = item
+                }
+            })
         }
     },
     mounted () {

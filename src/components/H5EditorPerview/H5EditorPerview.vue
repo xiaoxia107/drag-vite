@@ -35,7 +35,7 @@ const originWidth = 375
 const originHeight = 667
 import _ from 'lodash'
 export default {
-    name: 'Perview',
+    name: 'H5EditorPerview',
     props: {
         componentList: []
     },
@@ -73,7 +73,7 @@ export default {
   width: 236px;
   height: 498px;
   margin: 0 auto;
-  background: url("../../../../../images/H5Editor/iphone_bg.png") center center no-repeat;
+  background: url("../../images/H5Editor/iphone_bg.png") center center no-repeat;
   background-size: cover;
   .mobileheader{
     flex: 0 0 54px;

@@ -37,7 +37,8 @@ export default {
 .componentItem{
   width: 100%;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
+  word-break: break-all;
 }
 .delItemIcon{
   position: absolute;

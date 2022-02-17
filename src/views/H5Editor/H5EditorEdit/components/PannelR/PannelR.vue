@@ -1,16 +1,17 @@
 <template>
-<div>{{ editItem }}</div>
+    <div v-if="editItem" class="pannelR">
+      <WordEditor v-if="editItem.type == 1" :editItem="editItem" @changeWord="changeWord"/>
+      <CustomEditor v-if="editItem.type == 4"  :editItem="editItem" />
+    </div>
 </template>
 
 <script>
+import PannelR from './PannelR.js'
 export default {
-    name: 'PannelR',
-    props: {
-        editItem: Object
-    }
+    ...PannelR
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+@import './PannelR.scss';
 </style>

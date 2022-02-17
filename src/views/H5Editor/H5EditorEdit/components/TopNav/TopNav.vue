@@ -1,7 +1,7 @@
 <template>
   <div class="topNav">
     <div class="topNav-l">
-      <div class="topNav-back">
+      <div class="topNav-back" @click="goBack">
         <span class="el-icon-arrow-left"></span>
       </div>
       <el-input class="topNav-name"
@@ -34,6 +34,11 @@ export default {
     methods: {
         handleNavClick (func) {
             this.$emit('handleNavClick', func)
+        },
+        goBack () {
+            this.$router.push({
+                path: 'h5EditorList'
+            })
         }
     }
 }
@@ -59,6 +64,7 @@ export default {
     border-radius: 2px;
     background: #F4F5F7;
     color: #B0B2BA;
+    cursor: pointer;
   }
   &-name{
     width: 217px;
