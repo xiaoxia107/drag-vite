@@ -1,8 +1,11 @@
 import WordEditor from './Editors/WordEditor/WordEditor.vue'
+import ImageEditor from './Editors/ImageEditor/ImageEditor.vue'
+import BgImgEditor from './Editors/BgImgEditor/BgImgEditor.vue'
 import CustomEditor from './Editors/CustomEditor/Index.vue'
+
 export default {
     name: 'PannelR',
-    components: { WordEditor, CustomEditor },
+    components: { WordEditor, ImageEditor, BgImgEditor, CustomEditor },
     props: {
         editItem: Object
     },
@@ -12,8 +15,8 @@ export default {
         }
     },
     methods: {
-        changeWord (item) {
-            this.$emit('changeWord',item)
+        wordEdit (item) {
+            this.$emit('wordEdit', item)
         },
     },
     watch: {

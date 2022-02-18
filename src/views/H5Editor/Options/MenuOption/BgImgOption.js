@@ -1,7 +1,14 @@
 const BgImgOption = {
+    id: 'bgImgId',
     label: '背景',
     type: 3,
     imgName: 'component',
+    style: {
+        width: 280,
+        height: 140,
+        backgroundColor: '#fff',
+        backgroundUrl: ''
+    },
     subMenu: [{
         type: 3,
         label: '背景',
@@ -10,7 +17,9 @@ const BgImgOption = {
         imgName: 'video',
         style: {
             width: 280,
-            height: 140
+            height: 140,
+            backgroundColor: '#fff',
+            backgroundUrl: ''
         },
         ifHref: false,
         href: ''

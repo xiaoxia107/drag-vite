@@ -2,7 +2,6 @@
     <transition name="el-fade-in">
         <div id="eidtArea" class="eidtArea">
             <TopNav :templateName.sync="templateName" @handleNavClick="handleNavClick" />
-
             <div class="editpannel">
                 <div class="editpannel-l">
                     <div class="editMenus">
@@ -12,20 +11,22 @@
                         </div>
                     </div>
                     <div class="menusOptions">
-                        <vuedraggable class="dragArea list-group" dragClass="ghost" chosenClass="ghost" :list="menuOptions[curType].subMenu" :sort="false" :group="{ name: 'menucomponents', pull: 'clone', put: false }">
-                            <div class="list-group-item" :data-type="element.type" :data-value="element.value" v-for="element in menuOptions[curType].subMenu" :key="element.value">
-                                <MenuWord v-show="curType == 1" :element="element" />
-                                <MenuCustom v-show="curType == 4" :element="element" />
-                            </div>
-                        </vuedraggable>
+                      <div v-for="(element) in menuOptions[curType].subMenu" :key="element.value">
+                        <p v-show="curType == 2" style="padding:22px">选择样式</p>
+                        <MenuWord v-show="curType == 1"  :element="element" />
+                        <MenuBgImg v-show="curType == 3"  :bgItem="bgItem" />
+                        <MenuCustom  v-show="curType == 4" :element="element" />
+                      </div>
                     </div>
                 </div>
-                <div class="editpannel-c">
-                    <div class="perviewArea" id="perviewArea">
-                        <vuedraggable class="menuDragArea" ghostClass="ghost" :list="List" :group="{ name: 'menucomponents', pull: false, put: true,  }" @add="onAdd">
-                            <div class="list-group-item" v-for="(element, idx) in List" :key="idx">
-                                {{ element.label }}
-                            </div>
+                <div class="editpannel-c" @click.stop="handleSpaceClick">
+                    <div class="perviewArea" id="perviewArea" :style="bgItem.style" @click.stop="handleBgImg" :class="((curEditItem && curEditItem.id) == bgItem.id) ? 'curitem' : ''">
+                      <div v-show="(curEditItem && curEditItem.id) == bgItem.id" class="delItemIcon" @click.stop="handleBgImgDel">
+                        <span class="el-icon-circle-close"></span>
+                      </div>
+
+                        <vuedraggable class="menuDragArea" ghostClass="ghost"  :group="{ name: 'menucomponents', pull: false, put: true,  }" @add="onAdd">
+                           <div></div>
                         </vuedraggable>
                         <div class="newitem" :id="item.id" :data-x="item.x" :data-y="item.y" :class="(curEditItem && curEditItem.id == item.id) ? 'curitem' : ''" :style="{
                          left: item.x + 'px',
@@ -33,16 +34,17 @@
                          width: item.w + 'px',
                          height: item.h + 'px',
                          zIndex: item.zIndex
-                       }" v-for="(item, idx) in componentList" :key="idx" @click="handleItemClick(item, idx)">
+                       }" v-for="(item, idx) in componentList" :key="idx" @click.stop="handleItemClick(item, idx)">
                             <ShapeController :editItem="curEditItem" :item="item" @handleDel="handleDel(idx)">
                                 <Word v-if="item.type == 1" :editItem="item" />
+                                <Imagee v-if="item.type == 2" :editItem="item" />
                                 <CustomView v-if="item.type == 4" :editItem="item" />
                             </ShapeController>
                         </div>
                     </div>
                 </div>
                 <div class="editpannel-r">
-                    <PannelR :editItem="componentList[curIdx]" @changeWord="changeWord" />
+                    <PannelR :editItem="(curEditItem && curEditItem.id) == bgItem.id ? bgItem : componentList[curIdx]" @wordEdit="wordEdit" />
                 </div>
             </div>
             <Perview ref="Perview" :componentList="componentList" />

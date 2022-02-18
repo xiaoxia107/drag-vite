@@ -8,7 +8,7 @@
             <i slot="suffix" style="font-style:normal;position:absolute;top:12px;right:12px;color:#333333">px</i>
         </el-input>
         <p style="margin-top: 13px;width:100%">
-            <el-color-picker style="width:80%" v-model="color"></el-color-picker>
+            <el-color-picker style="width:80%" v-model="color" @change="changeColor"></el-color-picker>
         </p>
         <p class="textLab">
             <span :class="fontWeight == 'bold' ? 'active B' : 'B'" @click="clickLab('B')">B</span>
@@ -18,6 +18,12 @@
         <!-- <p class="textLineHeight">
             行间距
         </p> -->
+        <p>
+            <el-checkbox v-model="ifHref" style="margin:13px 0" @change="changeCheck">启动跳转链接</el-checkbox>
+        </p>
+        <p>
+            <el-input type="text" :disabled="!ifHref" v-model="href" placeholder="请输入内容" @change="changeHref" />
+        </p>
     </div>
 </template>
 

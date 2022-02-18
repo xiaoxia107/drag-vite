@@ -36,9 +36,9 @@ export default {
             this.$emit('handleNavClick', func)
         },
         goBack () {
-            this.$router.push({
-                path: 'h5EditorList'
-            })
+            // this.$router.push({
+            //     path: 'h5EditorList'
+            // })
         }
     }
 }

@@ -6,10 +6,13 @@ import { menuList, menuOptions } from '../Options/MenuOption/index'
 import PannelR from './components/PannelR/PannelR.vue'
 import ShapeController from './components/ShapeController/ShapeController.vue'
 import Word from './components/Word/Word.vue'
+import Imagee from './components/Image/Image.vue'
 import TopNav from './components/TopNav/TopNav'
 import Perview from '@/components/H5EditorPerview/H5EditorPerview'
 import MenuWord from './components/MenuComponent/MenuWord'
+import MenuImage from './components/MenuComponent/MenuImage'
 import MenuCustom from './components/MenuComponent/MenuCustom'
+import MenuBgImg from './components/MenuComponent/MenuBgImg'
 import CustomView from './components/CustomView/Index'
 export default {
     name: 'H5EditorEdit',
@@ -18,15 +21,18 @@ export default {
         PannelR,
         ShapeController,
         Word,
+        Imagee,
         TopNav,
         Perview,
         MenuWord,
+        MenuImage,
         MenuCustom,
+        MenuBgImg,
         CustomView
     },
     data () {
         return {
-            curType: 4,
+            curType: 3,
             menuList: _.cloneDeep(menuList),
             curDropTarget: null,
             zoomList: [],
@@ -35,22 +41,37 @@ export default {
             menuOptions: _.cloneDeep(menuOptions),
             curEditItem: null,
             curIdx: null,
-            templateName: ''
+            templateName: '',
+            bgItem: _.cloneDeep(menuOptions[3]),
+            isBgImg: false
         }
     },
     methods: {
+        handleBgImgDel () {
+            this.curEditItem = null
+            this.bgItem = _.cloneDeep(menuOptions[3])
+        },
+        handleSpaceClick () {
+            console.log('handleSpaceClick')
+            this.curEditItem = null
+        },
+        handleBgImg () {
+            this.curEditItem = _.cloneDeep(this.bgItem)
+            console.log('handleBgImg', this.curEditItem)
+        },
         handleNavClick (func) {
             switch (func) {
-            case 'preview':
-                console.log('preview', func)
-                this.$refs.Perview.openDialog()
-                break
-            case 'save':
-                console.log('save', func)
-                break
-            case 'del':
-                console.log('del', func)
-                break
+            /* eslint-disable */
+                case 'preview':
+                    console.log('preview', func)
+                    this.$refs.Perview.openDialog()
+                    break
+                case 'save':
+                    console.log('save', func)
+                    break
+                case 'del':
+                    console.log('del', func)
+                    break
             }
         },
         handleDel (idx) {
@@ -59,7 +80,6 @@ export default {
             this.curIdx = null
         },
         handleItemClick (item, idx) {
-            console.log(item)
             this.curEditItem = item
             this.curIdx = idx
         },
@@ -75,21 +95,27 @@ export default {
                 return item.value == value
             })
             let obj = _.cloneDeep(element)
-            let x = evt.originalEvent.clientX - (parent.offsetLeft + 50)
-            let y = evt.originalEvent.clientY - (parent.offsetTop + 108)
-            let w = obj.style.width
-            let h = obj.style.height
-            let params = {
-                id: uuid(),
-                x: x,
-                y: y,
-                w: w,
-                h: h,
-                zIndex: 999,
-                ...obj
+            let params = {}
+            if (type !== '3') {
+                let x = evt.originalEvent.clientX - (parent.offsetLeft + 50)
+                let y = evt.originalEvent.clientY - (parent.offsetTop + 108)
+                let w = obj.style.width
+                let h = obj.style.height
+                params = {
+                    id: uuid(),
+                    x: x,
+                    y: y,
+                    w: w,
+                    h: h,
+                    zIndex: 999,
+                    ...obj
+                }
+                this.componentList.push(params)
+            } else {
+                this.bgStyle = {
+                    backgroundColor: 'red'
+                }
             }
-            console.log('params', params)
-            this.componentList.push(params)
         },
         setPos (target, x, y, w, h) {
             target.setAttribute('data-x', x)
@@ -155,7 +181,7 @@ export default {
             }
         },
         //编辑字体
-        changeWord (item) {
+        wordEdit (item) {
             this.componentList.forEach(ite => {
                 if (ite.id == item.id) {
                     ite = item

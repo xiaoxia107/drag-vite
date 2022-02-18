@@ -1,21 +1,27 @@
 <template>
-  <div class="h5video">
-    <div class="h5video-icon">
-      <img v-if="element.imgName" :src="require(`@/images/H5Editor/${element.imgName}.png`)" alt="">
+  <vuedraggable class="dragArea list-group" dragClass="ghost" chosenClass="ghost" :sort="false" :group="{ name: 'menucomponents', pull: 'clone', put: false }">
+    <div class="h5video move list-group-item"  :data-type="element.type" :data-value="element.value">
+      <div class="h5video-icon">
+        <img v-if="element.imgName" :src="require(`@/images/H5Editor/${element.imgName}.png`)" alt="">
+      </div>
+      <div class="h5video-item">
+        <div class="h5video-label">{{ element.label }}</div>
+        <div class="h5video-sublabel">{{ element.subLabel }}</div>
+      </div>
     </div>
-    <div class="h5video-item">
-      <div class="h5video-label">{{ element.label }}</div>
-      <div class="h5video-sublabel">{{ element.subLabel }}</div>
-    </div>
-  </div>
+  </vuedraggable>
+
 </template>
 
 <script>
-import _ from 'lodash'
+import vuedraggable from 'vuedraggable'
 export default {
     name: 'MenuCustom',
     props: {
         element: Object
+    },
+    components: {
+        vuedraggable,
     },
     data () {
         return {

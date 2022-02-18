@@ -1,11 +1,5 @@
 .wordEditor {
-    padding: 33px 22px;
-    ::v-deep .el-input__inner {
-        padding-right: 0;
-    }
-    ::v-deep .el-color-picker__trigger {
-        width: 100%;
-    }
+    padding: 0!important;
     .textLab {
         width: 100%;
         display: flex;
@@ -31,10 +25,16 @@
             }
         }
     }
-    .textLineHeight{
+    .textLineHeight {
         height: 28px;
         line-height: 28px;
         font-size: 14px;
         margin-top: 13px;
     }
+}
+::v-deep .el-input__inner {
+    padding-right: 0;
+}
+::v-deep .el-color-picker__trigger {
+    width: 100%;
 }
