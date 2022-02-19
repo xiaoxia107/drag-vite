@@ -90,6 +90,9 @@ export default {
         //是否开启链接
         changeCheck (e) {
             this.editItem.style.ifHref = e
+            if (e == false) {
+                this.href = ''
+            }
             this.$emit('wordEdit', this.editItem)
         },
         //链接

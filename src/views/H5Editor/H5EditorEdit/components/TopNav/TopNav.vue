@@ -8,6 +8,7 @@
                 size="medium"
                 placeholder="请输入名称"
                 suffix-icon="el-icon-edit"
+                @change="changeAppName"
                 v-model="name">
       </el-input>
     </div>
@@ -15,7 +16,7 @@
       <el-button class="topNav-btn" type="text" @click="handleNavClick('preview')"><img :src="require('@/images/H5Editor/viewicon_1.png')" alt="">预览</el-button>
       <el-button class="topNav-btn" type="text" @click="handleNavClick('save')"><img :src="require('@/images/H5Editor/saveicon_1.png')" alt="">保存</el-button>
       <el-button class="topNav-btn" type="text" @click="handleNavClick('del')"><img :src="require('@/images/H5Editor/delicon_1.png')" alt="">删除</el-button>
-      <el-button type="primary" size="medium">发布</el-button>
+      <el-button type="primary" size="medium" @click="handleNavClick('release')">发布</el-button>
     </div>
   </div>
 </template>
@@ -24,7 +25,7 @@
 export default {
     name: 'TopNav',
     props: {
-        templateName: String
+        appName: String
     },
     data () {
         return {
@@ -32,6 +33,9 @@ export default {
         }
     },
     methods: {
+        changeAppName () {
+            this.$emit('update:appName', this.name)
+        },
         handleNavClick (func) {
             this.$emit('handleNavClick', func)
         },

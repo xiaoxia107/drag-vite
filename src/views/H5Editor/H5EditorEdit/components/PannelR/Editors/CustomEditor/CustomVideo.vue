@@ -6,7 +6,7 @@
       <el-input v-model="editItem.commonVideo" class="setcontent-area" type="textarea" placeholder="请输入内容"></el-input>
     </div>
     <div class="label mt16">自定义</div>
-    <div class="mt10 uploadFileBtn">
+    <div class="mt10 uploadFileBtn" @click="uploadFile">
       <span class="uploadFileBtn-l">选择视频</span>
       <img :src="require('@/images/H5Editor/upload.png')" alt="" />
     </div>
@@ -18,6 +18,11 @@ export default {
     name: 'CustomVideo',
     props: {
         editItem: Object
+    },
+    methods: {
+        uploadFile () {
+            this.$emit('uploadFile', 1)
+        }
     }
 }
 </script>

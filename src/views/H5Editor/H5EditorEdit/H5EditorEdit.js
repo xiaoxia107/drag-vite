@@ -14,6 +14,9 @@ import MenuImage from './components/MenuComponent/MenuImage'
 import MenuCustom from './components/MenuComponent/MenuCustom'
 import MenuBgImg from './components/MenuComponent/MenuBgImg'
 import CustomView from './components/CustomView/Index'
+const orgH5Url = 'http://114.55.96.166:8099/'
+// import { addH5Info, getH5InfoDetail, modifyH5Info } from '@/apiModules/apiMethods/h5editor/index'
+
 export default {
     name: 'H5EditorEdit',
     components: {
@@ -32,7 +35,7 @@ export default {
     },
     data () {
         return {
-            curType: 3,
+            curType: 2,
             menuList: _.cloneDeep(menuList),
             curDropTarget: null,
             zoomList: [],
@@ -43,10 +46,61 @@ export default {
             curIdx: null,
             templateName: '',
             bgItem: _.cloneDeep(menuOptions[3]),
-            isBgImg: false
+            isBgImg: false,
+            infoForm: {
+                id: this.$route.query.id || '',
+                appCode: this.$route.query.id ? '' : uuid(),
+                appName: '',
+                appOrgUrl: '',
+                layout: '',
+                h5ModuleInfoList: [
+                    {
+                        elementCode: '',
+                        elementJson: '',
+                        elementName: '',
+                        elementType: 0
+                    }
+                ]
+            }
         }
     },
     methods: {
+        submitForm () {
+            console.log('submitForm', this.infoForm)
+            if (!this.infoForm.appName) {
+                this.$message.error('H5应用名称不能为空')
+                return
+            }
+            this.infoForm.appOrgUrl = orgH5Url
+            let layout = {
+                componentList: this.componentList,
+                bgItem: this.bgItem
+            }
+            this.infoForm.layout = JSON.stringify(layout)
+
+            let h5ModuleInfoList = this.componentList.map(item => {
+                let obj = {
+                    elementCode: item.id,
+                    elementJson: '',
+                    elementName: item.label,
+                    elementType: item.type
+                }
+                return obj
+            })
+            this.infoForm.h5ModuleInfoList = h5ModuleInfoList
+            console.log('obj', this.infoForm)
+
+            let params = _.cloneDeep(this.infoForm)
+            if (params.id) {
+                delete params.appCode
+            }
+            // let func = this.infoForm.id ? modifyH5Info : addH5Info
+            // func(this.infoForm).then(res => {
+            //     this.$message.success('操作成功')
+            // }).catch(err => {
+            //     this.$message.error(err)
+            // })
+        },
         handleBgImgDel () {
             this.curEditItem = null
             this.bgItem = _.cloneDeep(menuOptions[3])
@@ -61,7 +115,7 @@ export default {
         },
         handleNavClick (func) {
             switch (func) {
-            /* eslint-disable */
+                /* eslint-disable */
                 case 'preview':
                     console.log('preview', func)
                     this.$refs.Perview.openDialog()
@@ -70,7 +124,16 @@ export default {
                     console.log('save', func)
                     break
                 case 'del':
-                    console.log('del', func)
+                    if (!this.curEditItem) return
+                    let idx = this.componentList.findIndex(item => {
+                        return item.id == this.curEditItem.id
+                    })
+                    this.componentList.splice(idx, 1)
+                    this.curEditItem = null
+                    this.curIdx = null
+                    break
+                case 'release':
+                    this.submitForm()
                     break
             }
         },
@@ -99,8 +162,22 @@ export default {
             if (type !== '3') {
                 let x = evt.originalEvent.clientX - (parent.offsetLeft + 50)
                 let y = evt.originalEvent.clientY - (parent.offsetTop + 108)
-                let w = obj.style.width
-                let h = obj.style.height
+                let w;
+                let h;
+                if (type == 2) {
+                    if (obj.value != 9) {
+                        w = 108
+                        h = 108
+                    } else {
+                        w = 239
+                        h = 121
+                    }
+
+                } else {
+                    w = obj.style.width
+                    h = obj.style.height
+                }
+
                 params = {
                     id: uuid(),
                     x: x,
@@ -132,6 +209,29 @@ export default {
         },
         init () {
             let self = this
+            const viewArea = interact('.perviewArea')
+            viewArea.resizable({
+                edges: { left: false, right: false, bottom: '.stretchbtn', top: false },
+                listeners: {
+                    move (event) {
+                        let target = event.target
+                        if (target) {
+                            let h = event.rect.height
+                            self.bgItem.style.height = h > 677 ? h : 677
+                        }
+                    }
+                },
+                modifiers: [
+                    interact.modifiers.restrictEdges({
+                        outer: 'parent'
+                    }),
+                    interact.modifiers.restrictSize({
+                        min: { width: 100, height: 50 }
+                    })
+                ],
+                inertia: true
+            })
+
             const zoomItem = interact('.newitem')
             zoomItem.resizable({
                 edges: { left: true, right: true, bottom: true, top: true },
@@ -187,9 +287,33 @@ export default {
                     ite = item
                 }
             })
+        },
+        //编辑图片
+        imageEdit (item) {
+            this.componentList.forEach(ite => {
+                if (ite.id == item.id) {
+                    ite = item
+                }
+            })
+        },
+        getDetail (id) {
+            if (!id) return
+            // getH5InfoDetail(id).then(res => {
+            //     let obj = res.data
+            //     Object.keys(this.infoForm).forEach(key => {
+            //         this.infoForm[key] = _.cloneDeep(obj[key])
+            //     })
+            //     if (this.infoForm.layout) {
+            //         let layout = JSON.parse(this.infoForm.layout)
+            //         this.componentList = layout.componentList
+            //         this.bgItem = layout.bgItem
+            //     }
+            //     console.log('this.infoForm', this.infoForm)
+            // })
         }
     },
     mounted () {
         this.init()
+        this.getDetail(this.$route.query.id)
     }
 }

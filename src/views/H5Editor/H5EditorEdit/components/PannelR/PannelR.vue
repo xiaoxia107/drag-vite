@@ -1,7 +1,7 @@
 <template>
     <div v-if="editItem" class="pannelR">
         <WordEditor v-if="editItem.type == 1" :editItem="editItem" @wordEdit="wordEdit" />
-        <ImageEditor v-if="editItem.type == 2" :editItem="editItem" />
+        <ImageEditor v-if="editItem.type == 2" :editItem="editItem" @imageEdit="imageEdit"/>
         <BgImgEditor v-if="editItem.type == 3" :editItem="editItem"/>
         <CustomEditor v-if="editItem.type == 4" :editItem="editItem" />
     </div>

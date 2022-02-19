@@ -1,7 +1,7 @@
 <template>
     <transition name="el-fade-in">
         <div id="eidtArea" class="eidtArea">
-            <TopNav :templateName.sync="templateName" @handleNavClick="handleNavClick" />
+            <TopNav :appName.sync="infoForm.appName" @handleNavClick="handleNavClick" />
             <div class="editpannel">
                 <div class="editpannel-l">
                     <div class="editMenus">
@@ -11,16 +11,26 @@
                         </div>
                     </div>
                     <div class="menusOptions">
-                      <div v-for="(element) in menuOptions[curType].subMenu" :key="element.value">
-                        <p v-show="curType == 2" style="padding:22px">选择样式</p>
-                        <MenuWord v-show="curType == 1"  :element="element" />
-                        <MenuBgImg v-show="curType == 3"  :bgItem="bgItem" />
-                        <MenuCustom  v-show="curType == 4" :element="element" />
-                      </div>
+                        <p v-if="curType == 2" style="padding:22px">选择样式</p>
+                        <div v-for="(element) in menuOptions[curType].subMenu" :key="element.value">
+                            <MenuWord v-if="curType == 1" :element="element" />
+                            <MenuImage v-if="curType == 2" :element="element" />
+                            <MenuBgImg v-if="curType == 3" :bgItem="bgItem" />
+                            <MenuCustom v-if="curType == 4" :element="element" />
+                        </div>
                     </div>
                 </div>
                 <div class="editpannel-c" @click.stop="handleSpaceClick">
-                    <div class="perviewArea" id="perviewArea" :style="bgItem.style" @click.stop="handleBgImg" :class="((curEditItem && curEditItem.id) == bgItem.id) ? 'curitem' : ''">
+                    <div class="perviewArea"
+                         id="perviewArea"
+                         :style="{
+                            width: bgItem.style.width + 'px',
+                            height: bgItem.style.height + 'px',
+                            backgroundColor: bgItem.style.backgroundColor,
+                            backgroundImage: bgItem.style.backgroundImage,
+                         }"
+                         @click.stop="handleBgImg"
+                         :class="((curEditItem && curEditItem.id) == bgItem.id) ? 'curitem' : ''">
                       <div v-show="(curEditItem && curEditItem.id) == bgItem.id" class="delItemIcon" @click.stop="handleBgImgDel">
                         <span class="el-icon-circle-close"></span>
                       </div>
@@ -41,13 +51,14 @@
                                 <CustomView v-if="item.type == 4" :editItem="item" />
                             </ShapeController>
                         </div>
+                      <div class="stretch"><span class="el-icon-d-caret stretchbtn"></span></div>
                     </div>
                 </div>
                 <div class="editpannel-r">
-                    <PannelR :editItem="(curEditItem && curEditItem.id) == bgItem.id ? bgItem : componentList[curIdx]" @wordEdit="wordEdit" />
+                    <PannelR :editItem="(curEditItem && curEditItem.id) == bgItem.id ? bgItem : componentList[curIdx]" @wordEdit="wordEdit" @imageEdit="imageEdit" />
                 </div>
             </div>
-            <Perview ref="Perview" :componentList="componentList" />
+            <Perview ref="Perview" :componentList="componentList" :bgItem="bgItem"/>
         </div>
     </transition>
 </template>

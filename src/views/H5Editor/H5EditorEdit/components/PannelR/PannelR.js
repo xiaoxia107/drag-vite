@@ -18,6 +18,9 @@ export default {
         wordEdit (item) {
             this.$emit('wordEdit', item)
         },
+        imageEdit (item) {
+            this.$emit('imageEdit', item)
+        },
     },
     watch: {
 

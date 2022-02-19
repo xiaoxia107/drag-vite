@@ -1,6 +1,7 @@
 <template>
   <div class="h5custom" v-if="editItem">
-    <div class="h5custom-btn" :style="{
+    <div class="h5custom-btn"
+         :style="{
             width: editItem.w + 'px',
             height: editItem.h + 'px',
             lineHeight: editItem.h + 'px',
@@ -9,7 +10,9 @@
             borderRadius: editItem.style.borderRadius + 'px',
             opacity: editItem.style.opacity,
             fontSize: editItem.style.fontSize + 'px'
-    }">{{ editItem.label }}</div>
+         }">
+         {{ editItem.label }}
+    </div>
   </div>
 </template>
 

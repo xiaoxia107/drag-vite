@@ -1,7 +1,7 @@
 <template>
   <div class="h5qrcode" v-if="editItem">
-    <img v-if="!editItem.imgSrc" :src="require('@/images/H5Editor/defaultImg.png')" alt="">
-    <img v-else :src="editItem.imgSrc" alt="">
+    <img v-if="!editItem.customSrc" :src="require('@/images/H5Editor/defaultImg.png')" alt="">
+    <img v-else :src="editItem.customSrc" alt="">
   </div>
 </template>
 

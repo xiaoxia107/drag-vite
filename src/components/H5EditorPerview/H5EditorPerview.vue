@@ -7,8 +7,17 @@
       :append-to-body="true"
       width="327px">
     <div class="previewmobile">
+      <div class="previewmobile-bg">
+        <img :src="require('@/images/H5Editor/iphone_bg.png')" alt="">
+      </div>
       <div class="mobileheader">模板</div>
-      <div class="mobileview">
+      <div class="mobileview"
+           :style="{
+              width: viewBg.width + 'px',
+              height: viewBg.height + 'px',
+              backgroundColor: viewBg.backgroundColor,
+              backgroundImage: viewBg.backgroundImage,
+           }">
         <div class="mobileitem"
              :style="{
                         left: item.x + 'px',
@@ -29,7 +38,7 @@
 </template>
 
 <script>
-const previewWidth = 236
+const previewWidth = 225
 const previewHeight = 444
 const originWidth = 375
 const originHeight = 667
@@ -37,7 +46,8 @@ import _ from 'lodash'
 export default {
     name: 'H5EditorPerview',
     props: {
-        componentList: []
+        componentList: [],
+        bgItem: Object
     },
     computed: {
         layoutList () {
@@ -51,6 +61,12 @@ export default {
                 return obj
             })
             return list
+        },
+        viewBg () {
+            let obj = _.cloneDeep(this.bgItem.style)
+            obj.width = previewWidth
+            obj.height = parseInt((obj.height * previewHeight) / originHeight)
+            return obj
         }
     },
     data () {
@@ -73,8 +89,22 @@ export default {
   width: 236px;
   height: 498px;
   margin: 0 auto;
-  background: url("../../images/H5Editor/iphone_bg.png") center center no-repeat;
-  background-size: cover;
+  position: relative;
+  //background: url("../../images/H5Editor/iphone_bg.png") center center no-repeat;
+  //background-size: cover;
+  &-bg{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    img{
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+  }
   .mobileheader{
     flex: 0 0 54px;
     height: 54px;
@@ -84,6 +114,7 @@ export default {
   .mobileview{
     flex: 1;
     position: relative;
+    margin: 0 auto 6px auto;
   }
   .mobileitem{
     position: absolute;

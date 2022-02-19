@@ -4,6 +4,7 @@
       <!--    <iframe frameborder="0" src="https://v.qq.com/txp/iframe/player.html?vid=p0040iz2h39" allowFullScreen="true"></iframe>-->
       <video v-if="editItem.value == 1"
              class="h5custom-video"
+             controls
              :width="editItem.w"
              :height="editItem.h"
              :src="editItem.customSrc"></video>

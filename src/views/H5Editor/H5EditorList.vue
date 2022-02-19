@@ -9,21 +9,21 @@
     <div class="mainWrapper p20">
       <div class="msgSearch">
         <div class="msgSearch-form">
-          <el-input v-model="searchForm.templateName"
+          <el-input v-model="searchForm.appName"
                     class="msgSearch-input"
                     placeholder="请输入页面标题"
                     prefix-icon="el-icon-search"
                     clearable>
           </el-input>
-          <el-select clearable
-                     v-model="searchForm.templateType"
-                     class="ml10 w180"
-                     placeholder="请输入">
-            <el-option v-for="(item, idx) in Options"
-                       :key="idx + 1"
-                       :label="item.label"
-                       :value="item.value"></el-option>
-          </el-select>
+          <el-date-picker
+              class="ml10 w180"
+              v-model="searchForm.time"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+          </el-date-picker>
           <el-button class="ml10"
                      type="primary"
                      icon="el-icon-search"
@@ -45,11 +45,11 @@
                   :data="tableData">
           <el-table-column show-overflow-tooltip
                            label="页面标题"
-                           prop="templateName">
+                           prop="appName">
           </el-table-column>
           <el-table-column show-overflow-tooltip
                            label="链接地址"
-                           prop="templateName">
+                           prop="appDwzUrl">
           </el-table-column>
           <el-table-column show-overflow-tooltip
                            label="创建时间"
@@ -68,13 +68,6 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-dialog custom-class="mobilePreview"
-                 :modal-append-to-body="false"
-                 :append-to-body="true"
-                 :visible.sync="visibleDialog"
-                 width="320px">
-        <Perview ref="Perview"/>
-      </el-dialog>
       <div class="tr">
         <el-pagination :current-page="pageInfo.page"
                        @current-change="handleChangePage"
@@ -86,6 +79,7 @@
         </el-pagination>
       </div>
     </div>
+    <Perview ref="Perview"  :componentList="componentList" :bgItem="bgItem"/>
   </div>
 </template>
 

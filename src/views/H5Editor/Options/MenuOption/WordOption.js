@@ -7,6 +7,7 @@ const WordOption = {
             type: 1,
             label: '点击添加标题文字',
             value: 1,
+            elementType: 1,
             style: {
                 fontFamily: '宋体',
                 fontKey: 1,
@@ -17,7 +18,7 @@ const WordOption = {
                 fontStyle: 'normal',
                 textDecoration: 'none',
                 width: 194,
-                height: 40
+                height: 60
             },
             ifHref: false,
             href: ''
@@ -26,6 +27,7 @@ const WordOption = {
             type: 1,
             label: '点击添加副标题文字',
             value: 2,
+            elementType: 1,
             style: {
                 fontFamily: '宋体',
                 fontKey: 1,
@@ -36,7 +38,7 @@ const WordOption = {
                 fontStyle: 'normal',
                 textDecoration: 'none',
                 width: 194,
-                height: 40
+                height: 60
             },
             ifHref: false,
             href: ''
@@ -45,6 +47,7 @@ const WordOption = {
             type: 1,
             label: '点击添加正文文字',
             value: 3,
+            elementType: 1,
             style: {
                 fontFamily: '宋体',
                 fontKey: 1,
@@ -55,7 +58,7 @@ const WordOption = {
                 fontStyle: 'normal',
                 textDecoration: 'none',
                 width: 194,
-                height: 40
+                height: 60
             },
             ifHref: false,
             href: ''

@@ -1,4 +1,6 @@
 import Perview from '@/components/H5EditorPerview/H5EditorPerview'
+import {menuOptions} from '@/views/H5Editor/Options/MenuOption'
+import _ from 'lodash'
 
 export default {
     name: 'index',
@@ -8,8 +10,8 @@ export default {
     data () {
         return {
             searchForm: {
-                templateType: '',
-                templateName: ''
+                appName: '',
+                time: ''
             },
             pageInfo: {
                 page: 1,
@@ -19,13 +21,13 @@ export default {
             tableData: [{
                 name: 'aaa'
             }],
-            visibleDialog: false,
             Options: [],
-            loading: false
+            loading: false,
+            componentList: [],
+            bgItem: _.cloneDeep(menuOptions[3]),
         }
     },
     methods: {
-
         handleSizeChange (size) {
             this.pageInfo.rows = size
             this.getList(1)
@@ -47,7 +49,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // removeTemplate(templateId).then(res => {
+                // removeH5Info(templateId).then(res => {
                 //     this.$message({
                 //         type: 'success',
                 //         message: '删除成功!'
@@ -56,15 +58,15 @@ export default {
                 // })
             })
         },
-        handlePreview (templateId) {
-            // dingDetail(templateId).then(res => {
-            //     let infoObj = res.data
-            //     Object.keys(this.templateForm).forEach(key => {
-            //         if (infoObj[key]) {
-            //             this.templateForm[key] = _.cloneDeep(infoObj[key])
-            //         }
-            //     })
-            //     this.visibleDialog = true
+        handlePreview (id) {
+            // getH5InfoDetail(id).then(res => {
+            //     let obj = res.data
+            //     if (obj.layout) {
+            //         let layout = JSON.parse(obj.layout)
+            //         this.componentList = layout.componentList
+            //         this.bgItem = layout.bgItem
+            //         this.$refs.Perview.openDialog()
+            //     }
             // })
         },
         handleAdd () {
@@ -77,14 +79,23 @@ export default {
                 this.pageInfo.page = pageNum
             }
             let { page, rows } = this.pageInfo
+            let startTime = ''
+            let endTime = ''
+            if (this.searchForm.time) {
+                startTime = this.searchForm.time[0]
+                endTime = this.searchForm.time[1]
+            }
+
             let params = {
                 page,
                 rows,
-                ...this.searchForm
+                startTime,
+                endTime,
+                appName: this.searchForm.appName
             }
-            // this.loading = true
-            // this.tableData = []
-            // dingPage(params).then(res => {
+            this.loading = true
+            this.tableData = []
+            // getH5Page(params).then(res => {
             //     this.tableData = res.data.records
             //     this.pageInfo.total = res.data.total
             // }).then(() => {

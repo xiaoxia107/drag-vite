@@ -1,0 +1,32 @@
+.replace {
+    width: 236px;
+    height: 36px;
+    line-height: 36px;
+    background: #f7f8fb;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    img {
+        height: 14px;
+    }
+}
+.cd {
+    margin-top: 14px;
+    width: 236px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0;
+    span {
+        display: block;
+        height: 36px;
+        width: 110px;
+        line-height: 36px;
+        background: #f7f8fb;
+        border-radius: 4px;
+        text-align: center;
+        font-size: 14px;
+        cursor: pointer;
+    }
+}

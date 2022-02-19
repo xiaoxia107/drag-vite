@@ -75,6 +75,7 @@ export default {
     methods: {
         handleTabClick () {},
         changeBgColor (value) {
+            console.log('this.bgItem', this.bgItem)
             this.bgItem.style.backgroundColor = value
         },
     }
