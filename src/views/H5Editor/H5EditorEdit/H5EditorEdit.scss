@@ -2,7 +2,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    top: 48px;
+    top: 0;
     bottom: 0;
     width: 100%;
     height: calc(100% - 48px);
@@ -77,7 +77,10 @@
         .perviewArea {
             margin: 64px auto;
             position: relative;
-            background: #fff;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
             .stretch{
                 position: absolute;
                 bottom: -20px;

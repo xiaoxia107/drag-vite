@@ -18,8 +18,23 @@
         <p>
             <el-input type="text" :disabled="!ifHref" v-model="href" placeholder="请输入内容" @change="changeHref" />
         </p>
-        <el-dialog>
-
+        <el-dialog title="图片素材" :visible.sync="dialogVisible" custom-class="customTemplate" :append-to-body="true" width="80%">
+            <el-tabs tab-position="left" style="height: 439px">
+                <el-tab-pane label="图片库">
+                    图片库
+                </el-tab-pane>
+                <el-tab-pane label="我的图片">
+                    我的图片
+                </el-tab-pane>
+            </el-tabs>
+            <div class="tr">
+                <el-pagination :current-page="pageInfo.page" @current-change="handleChangePage" @size-change="handleSizeChange" :page-size="pageInfo.rows" :page-sizes="[10,25,50,100]" background layout="total, sizes, prev, pager, next, jumper" :total="pageInfo.total">
+                </el-pagination>
+            </div>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+            </span>
         </el-dialog>
     </div>
 </template>

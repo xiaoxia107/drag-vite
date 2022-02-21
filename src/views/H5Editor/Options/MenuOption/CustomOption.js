@@ -53,7 +53,7 @@ const CustomOption = {
             background: '#1391CC',
             lineHeight: 36,
             borderRadius: 0,
-            opacity: 1,
+            opacity: 100,
             fontSize: 14
         },
         ifHref: false,
@@ -65,6 +65,7 @@ const CustomOption = {
         value: 4,
         elementType: 7,
         imgName: 'phone',
+        phone: '',
         style: {
             width: 104,
             height: 36,
@@ -72,7 +73,7 @@ const CustomOption = {
             background: '#58C171',
             lineHeight: 36,
             borderRadius: 0,
-            opacity: 1,
+            opacity: 100,
             fontSize: 14
         },
         ifHref: false,

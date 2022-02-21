@@ -1,4 +1,5 @@
 import Perview from '@/components/H5EditorPerview/H5EditorPerview'
+import { getH5Page, removeH5Info, getH5InfoDetail } from '@/apiModules/apiMethods/h5editor/index'
 import {menuOptions} from '@/views/H5Editor/Options/MenuOption'
 import _ from 'lodash'
 
@@ -49,25 +50,25 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                // removeH5Info(templateId).then(res => {
-                //     this.$message({
-                //         type: 'success',
-                //         message: '删除成功!'
-                //     })
-                //     this.getList(1)
-                // })
+                removeH5Info(templateId).then(res => {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    })
+                    this.getList(1)
+                })
             })
         },
         handlePreview (id) {
-            // getH5InfoDetail(id).then(res => {
-            //     let obj = res.data
-            //     if (obj.layout) {
-            //         let layout = JSON.parse(obj.layout)
-            //         this.componentList = layout.componentList
-            //         this.bgItem = layout.bgItem
-            //         this.$refs.Perview.openDialog()
-            //     }
-            // })
+            getH5InfoDetail(id).then(res => {
+                let obj = res.data
+                if (obj.layout) {
+                    let layout = JSON.parse(obj.layout)
+                    this.componentList = layout.componentList
+                    this.bgItem = layout.bgItem
+                    this.$refs.Perview.openDialog()
+                }
+            })
         },
         handleAdd () {
             this.$router.push({
@@ -95,14 +96,14 @@ export default {
             }
             this.loading = true
             this.tableData = []
-            // getH5Page(params).then(res => {
-            //     this.tableData = res.data.records
-            //     this.pageInfo.total = res.data.total
-            // }).then(() => {
-            //     this.loading = false
-            // }).catch(() => {
-            //     this.loading = false
-            // })
+            getH5Page(params).then(res => {
+                this.tableData = res.data.records
+                this.pageInfo.total = res.data.total
+            }).then(() => {
+                this.loading = false
+            }).catch(() => {
+                this.loading = false
+            })
         }
     },
     created () {

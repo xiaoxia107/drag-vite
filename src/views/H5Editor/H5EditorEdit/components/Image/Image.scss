@@ -20,7 +20,20 @@ img {
 .type9 {
     width: 239px;
     height: 121px;
+    display: block;
+    flex-wrap: none;
+    border-radius: 0px;
 }
 .list-group {
     width: 108px;
+}
+.el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+    background-color: #d3dce6;
+}
+::v-deep .el-carousel__container {
+    height: 100%;
 }

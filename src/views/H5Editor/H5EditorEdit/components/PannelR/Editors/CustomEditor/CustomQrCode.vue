@@ -1,14 +1,15 @@
 <template>
   <div class="qrCode" v-if="editItem">
     <div class="label">内容</div>
-    <el-input placeholder="请输入内容" v-model="editItem.url" class="input-with-select mtop10" @change="changeQrCode">
-      <el-button slot="append" icon="el-icon-search"></el-button>
+    <el-input placeholder="请输入内容" v-model="editItem.url" class="input-with-select mtop10">
+      <el-button slot="append" icon="el-icon-search" @click="generateQrCode"></el-button>
     </el-input>
 <!--    <div class="label">标志</div>-->
     <div class="label mtb16">样式</div>
     <div class="qrCode-css">
      <div class="codeCss">
        <qrcode
+           id="qrcodeID"
            v-if="!refresh"
            :url="editItem.url"
            :wid="46"
@@ -43,6 +44,8 @@
 
 <script>
 import qrcode from 'vue_qrcodes'
+import domtoimage from 'dom-to-image'
+import {filesAnon} from '@/apiModules/apiMethods/h5editor/index'
 export default {
     name: 'CustomQrCode',
     props: {
@@ -57,6 +60,20 @@ export default {
         }
     },
     methods: {
+        generateQrCode () {
+            let qrcodeID = document.getElementById('qrcodeID')
+            domtoimage.toBlob(qrcodeID).then(blobFile => {
+                let templateThumbnail = new File([blobFile], 'qrcode.png', { type: 'image/png', lastModified: Date.now() })
+                let form = new FormData()
+                form.append('file', templateThumbnail)
+
+                filesAnon(form).then(result => {
+                    return result
+                }).then(res => {
+                    this.editItem.customSrc = res.url
+                })
+            })
+        },
         changeQrCode (val, type) {
             if (!val) {
                 if (type == 1) {

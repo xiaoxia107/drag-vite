@@ -11,6 +11,8 @@ export default {
     props: {
         editItem: Object
     },
+    components: {
+    },
 }
 </script>
 

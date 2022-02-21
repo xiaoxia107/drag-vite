@@ -15,7 +15,7 @@ import MenuCustom from './components/MenuComponent/MenuCustom'
 import MenuBgImg from './components/MenuComponent/MenuBgImg'
 import CustomView from './components/CustomView/Index'
 const orgH5Url = 'http://114.55.96.166:8099/'
-// import { addH5Info, getH5InfoDetail, modifyH5Info } from '@/apiModules/apiMethods/h5editor/index'
+import { addH5Info, getH5InfoDetail, modifyH5Info } from '@/apiModules/apiMethods/h5editor/index'
 
 export default {
     name: 'H5EditorEdit',
@@ -35,7 +35,7 @@ export default {
     },
     data () {
         return {
-            curType: 2,
+            curType: 4,
             menuList: _.cloneDeep(menuList),
             curDropTarget: null,
             zoomList: [],
@@ -94,12 +94,12 @@ export default {
             if (params.id) {
                 delete params.appCode
             }
-            // let func = this.infoForm.id ? modifyH5Info : addH5Info
-            // func(this.infoForm).then(res => {
-            //     this.$message.success('操作成功')
-            // }).catch(err => {
-            //     this.$message.error(err)
-            // })
+            let func = this.infoForm.id ? modifyH5Info : addH5Info
+            func(params).then(res => {
+                this.$message.success('操作成功')
+            }).catch(err => {
+                this.$message.error(err)
+            })
         },
         handleBgImgDel () {
             this.curEditItem = null
@@ -115,7 +115,7 @@ export default {
         },
         handleNavClick (func) {
             switch (func) {
-                /* eslint-disable */
+            /* eslint-disable */
                 case 'preview':
                     console.log('preview', func)
                     this.$refs.Perview.openDialog()
@@ -298,18 +298,18 @@ export default {
         },
         getDetail (id) {
             if (!id) return
-            // getH5InfoDetail(id).then(res => {
-            //     let obj = res.data
-            //     Object.keys(this.infoForm).forEach(key => {
-            //         this.infoForm[key] = _.cloneDeep(obj[key])
-            //     })
-            //     if (this.infoForm.layout) {
-            //         let layout = JSON.parse(this.infoForm.layout)
-            //         this.componentList = layout.componentList
-            //         this.bgItem = layout.bgItem
-            //     }
-            //     console.log('this.infoForm', this.infoForm)
-            // })
+            getH5InfoDetail(id).then(res => {
+                let obj = res.data
+                Object.keys(this.infoForm).forEach(key => {
+                    this.infoForm[key] = _.cloneDeep(obj[key])
+                })
+                if (this.infoForm.layout) {
+                    let layout = JSON.parse(this.infoForm.layout)
+                    this.componentList = layout.componentList
+                    this.bgItem = layout.bgItem
+                }
+                console.log('this.infoForm', this.infoForm)
+            })
         }
     },
     mounted () {

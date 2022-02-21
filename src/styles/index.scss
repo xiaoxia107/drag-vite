@@ -42,3 +42,14 @@ p {
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(0, 0, 0, 0.4);
 }
+
+.flexCenter{
+    display: flex;
+    align-items: center;
+}
+.flex-1{
+    flex: 1;
+}
+.ml10{
+    margin-left: 10px;
+}

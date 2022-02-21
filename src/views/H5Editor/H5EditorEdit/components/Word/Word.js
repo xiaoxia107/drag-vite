@@ -28,12 +28,12 @@ export default {
             // immediate: true,
             deep: true,
             handler (val) {
-                this.$refs.input.$el.style.fontWeight = val.style.fontWeight
-                this.$refs.input.$el.style.fontSize = val.style.fontSize + 'px'
-                this.$refs.input.$el.style.fontFamily = val.style.fontFamily
-                this.$refs.input.$el.style.color = val.style.color
-                this.$refs.input.$el.style.fontStyle = val.style.fontStyle
-                this.$refs.input.$el.style.textDecoration = val.style.textDecoration
+                // this.$refs.input.$el.style.fontWeight = val.style.fontWeight
+                // this.$refs.input.$el.style.fontSize = val.style.fontSize + 'px'
+                // this.$refs.input.$el.style.fontFamily = val.style.fontFamily
+                // this.$refs.input.$el.style.color = val.style.color
+                // this.$refs.input.$el.style.fontStyle = val.style.fontStyle
+                // this.$refs.input.$el.style.textDecoration = val.style.textDecoration
             }
         }
     },

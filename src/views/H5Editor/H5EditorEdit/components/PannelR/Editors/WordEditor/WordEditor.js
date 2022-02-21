@@ -7,48 +7,40 @@ export default {
     },
     data () {
         return {
-            //文字编辑
+            //字体
             fontOption: _.cloneDeep(fontOption),
-            fontWeight: 'normal',
-            fontStyle: 'normal',
-            textDecoration: 'none',
-            fontKey: 1,
-            fontSize: 12,
-            color: '#555',
-            ifHref: false,
-            href: ''
         }
     },
     methods: {
         clickLab (key) {
             //加粗
             if (key == 'B') {
-                if (this.fontWeight == 'normal') {
-                    this.fontWeight = 'bold'
-                } else if (this.fontWeight == 'bold') {
-                    this.fontWeight = 'normal'
+                if (this.editItem.style.fontWeight == 'normal') {
+                    this.editItem.style.fontWeight = 'bold'
+                } else if (this.editItem.style.fontWeight == 'bold') {
+                    this.editItem.style.fontWeight = 'normal'
                 }
-                this.changeFontWeight()
+                this.$emit('wordEdit', this.editItem)
             }
 
             //斜体
             if (key == 'I') {
-                if (this.fontStyle == 'normal') {
-                    this.fontStyle = 'italic'
-                } else if (this.fontStyle == 'italic') {
-                    this.fontStyle = 'normal'
+                if (this.editItem.style.fontStyle == 'normal') {
+                    this.editItem.style.fontStyle = 'italic'
+                } else if (this.editItem.style.fontStyle == 'italic') {
+                    this.editItem.style.fontStyle = 'normal'
                 }
-                this.changeFontStyle()
+                this.$emit('wordEdit', this.editItem)
             }
 
             //下划线
             if (key == 'U') {
-                if (this.textDecoration == 'none') {
-                    this.textDecoration = 'underline'
-                } else if (this.textDecoration == 'underline') {
-                    this.textDecoration = 'none'
+                if (this.editItem.style.textDecoration == 'none') {
+                    this.editItem.style.textDecoration = 'underline'
+                } else if (this.editItem.style.textDecoration == 'underline') {
+                    this.editItem.style.textDecoration = 'none'
                 }
-                this.changeTextDecoration()
+                this.$emit('wordEdit', this.editItem)
             }
 
         },
@@ -62,55 +54,5 @@ export default {
                 }
             });
         },
-        //字号
-        changeFontSize (e) {
-            this.editItem.style.fontSize = e
-            this.$emit('wordEdit', this.editItem)
-        },
-        //字体颜色
-        changeColor (e) {
-            this.editItem.style.color = e
-            this.$emit('wordEdit', this.editItem)
-        },
-        //加粗
-        changeFontWeight () {
-            this.editItem.style.fontWeight = this.fontWeight
-            this.$emit('wordEdit', this.editItem)
-        },
-        //斜体
-        changeFontStyle () {
-            this.editItem.style.fontStyle = this.fontStyle
-            this.$emit('wordEdit', this.editItem)
-        },
-        //下划线
-        changeTextDecoration () {
-            this.editItem.style.textDecoration = this.textDecoration
-            this.$emit('wordEdit', this.editItem)
-        },
-        //是否开启链接
-        changeCheck (e) {
-            this.editItem.style.ifHref = e
-            if (e == false) {
-                this.href = ''
-            }
-            this.$emit('wordEdit', this.editItem)
-        },
-        //链接
-        changeHref (e) {
-            this.editItem.style.href = e
-            this.$emit('wordEdit', this.editItem)
-        }
-    },
-    watch: {
-        editItem (newVal, oldVal) {
-            if (newVal) {
-                this.fontKey = newVal.style.fontKey
-                this.fontSize = newVal.style.fontSize
-                this.color = newVal.style.color
-                this.fontWeight = newVal.style.fontWeight
-                this.fontStyle = newVal.style.fontStyle
-                this.textDecoration = newVal.style.textDecoration
-            }
-        }
-    },
+    }
 };

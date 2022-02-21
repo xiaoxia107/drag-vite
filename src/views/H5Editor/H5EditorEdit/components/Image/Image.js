@@ -1,5 +1,5 @@
 export default {
-    name: "Image",
+    name: "Imagee",
     props: {
         editItem: Object
     },
@@ -36,13 +36,17 @@ export default {
             if (this.editItem.imgs) {
                 if (this.editItem.value != 9) {
                     this.editItem.imgs.forEach(item => {
-                        item.style.width = item.style.width
-                        item.style.height = item.style.height
+                        if (typeof (item.style.width) == 'number' && typeof (item.style.height) == 'number') {
+                            item.style.width = item.style.width + 'px'
+                            item.style.height = item.style.height + 'px'
+                        }
                     })
                 }
             } else {
-                this.editItem.style.width = this.editItem.style.width + 'px'
-                this.editItem.style.height = this.editItem.style.height + 'px'
+                if (typeof (this.editItem.style.width) == 'number' && typeof (this.editItem.style.height) == 'number') {
+                    this.editItem.style.width = val.w + 'px'
+                    this.editItem.style.height = val.h + 'px'
+                }
             }
         }
     },

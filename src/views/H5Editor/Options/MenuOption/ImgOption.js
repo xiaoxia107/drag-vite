@@ -251,7 +251,7 @@ const ImgOption = {
             label: 'banner图',
             value: 9,
             style:{
-                height:121,
+                height:60,
                 width:239,
             },
             imgs: [
@@ -262,6 +262,8 @@ const ImgOption = {
                         width: '100%',
                         height: '100%'
                     },
+                    ifHref:false,
+                    href:''
                 },
                 {
                     imgName: 'bannerImg2',
@@ -270,6 +272,28 @@ const ImgOption = {
                         width: '100%',
                         height: '100%'
                     },
+                    ifHref:false,
+                    href:''
+                },
+                {
+                    imgName: 'bannerImg3',
+                    imgSrc: null,
+                    style: {
+                        width: '100%',
+                        height: '100%'
+                    },
+                    ifHref:false,
+                    href:''
+                },
+                {
+                    imgName: 'bannerImg4',
+                    imgSrc: null,
+                    style: {
+                        width: '100%',
+                        height: '100%'
+                    },
+                    ifHref:false,
+                    href:''
                 }
             ]
         }

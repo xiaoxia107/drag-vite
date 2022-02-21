@@ -13,7 +13,7 @@ import CustomVideo from './CustomVideo.vue'
 import CustomQrCode from './CustomQrCode.vue'
 import CustomComponent from './CustomComponent.vue'
 import CustomPhone from './CustomPhone.vue'
-// import {filesAnon} from '@/apiModules/apiMethods/Msg5G/template'
+import {filesAnon} from '@/apiModules/apiMethods/h5editor/index'
 
 export default {
     name: 'CustomEditor',
@@ -28,7 +28,6 @@ export default {
     },
     methods: {
         uploadFile (type) {
-            console.log('uploadFile', this.editItem)
             this.$refs['form'].click()
         },
         changeUpload (event) {
@@ -38,12 +37,12 @@ export default {
         },
         setValue (file) {
             let elementType = this.editItem.elementType
-            let fileType = 'MP4'
+            let fileType = 'MP4|mp4'
             let fileSize = 20
             /* eslint-disable */
             switch (elementType) {
                 case 4:
-                    fileType = 'MP4'
+                    fileType = 'MP4|mp4'
                     fileSize = 20
                     break
                 case 5:
@@ -67,10 +66,10 @@ export default {
             if (isAcceptExt && isLt2M) {
                 let fd = new FormData()
                 fd.append('file', file)
-            //     filesAnon(fd).then(res => {
-            //         /* eslint-disable */
-            //       this.editItem.customSrc = res.url
-            // })
+                filesAnon(fd).then(res => {
+                    /* eslint-disable */
+                  this.editItem.customSrc = res.url
+            })
           }
 
         },

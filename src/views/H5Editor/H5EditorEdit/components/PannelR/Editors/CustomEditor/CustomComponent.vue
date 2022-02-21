@@ -18,6 +18,58 @@
       </div>
     </div>
     <div class="label mt16">内容</div>
+    <div class="mt16 flexCenter">
+      <el-input type="number"
+                class="numberInput cssNumber"
+                :min='12'
+                :max='99'
+                v-model="editItem.style.fontSize"
+                @change="changeFontSize">
+        <i slot="suffix" class="numberInput-suffix">px</i>
+      </el-input>
+      <el-input
+          class="ml10"
+          placeholder="请输入按钮文字"
+          suffix-icon="el-icon-edit"
+          v-model="editItem.label">
+      </el-input>
+    </div>
+    <div class="flexCenter mt16">
+      <span class="csslabel">透明度</span>
+      <el-progress class="progress" :percentage="editItem.style.opacity"></el-progress>
+      <el-input type="number"
+                class="numberInput cssNumber"
+                size="medium"
+                :min='0'
+                :max='100'
+                v-model="editItem.style.opacity"
+                @change="changeFontSize">
+        <i slot="suffix" class="numberInput-suffix">%</i>
+      </el-input>
+    </div>
+    <div class="flexCenter mt16">
+      <span class="csslabel">圆角</span>
+      <el-progress class="progress" :percentage="editItem.style.radius"></el-progress>
+      <el-input type="number"
+                class="numberInput cssNumber"
+                size="medium"
+                :min='0'
+                :max='100'
+                v-model="editItem.style.radius"
+                @change="changeFontSize">
+        <i slot="suffix" class="numberInput-suffix">px</i>
+      </el-input>
+    </div>
+    <div class="mt16">
+      <div>
+        <el-checkbox v-model="editItem.ifHref">启动跳转链接</el-checkbox>
+      </div>
+      <el-input
+          class="mt16"
+          placeholder="请输入内容"
+          v-model="editItem.link">
+      </el-input>
+    </div>
   </div>
 </template>
 
@@ -34,6 +86,7 @@ export default {
         }
     },
     methods: {
+        changeFontSize () {},
         uploadFile () {
             this.$emit('uploadFile')
         }
@@ -83,5 +136,35 @@ export default {
       height: 100%;
     }
   }
+}
+.numberInput{
+  position:relative;
+  &-suffix{
+    position:absolute;
+    top:12px;
+    right:12px;
+    font-style:normal;
+    color:#333333
+  }
+}
+.cssNumber{
+  flex: 0 0 66px;
+}
+.numberInput .el-input__inner{
+  padding-right: 0;
+}
+.progress{
+  margin-left: 10px;
+  margin-right: 10px;
+  flex: 1;
+  .el-progress-bar{
+    padding-right: 0;
+  }
+  .el-progress__text{
+    display: none;
+  }
+}
+.csslabel{
+  flex: 0 0 60px;
 }
 </style>

@@ -25,13 +25,17 @@ export default {
             if (this.element.imgs) {
                 if (this.element.value != 9) {
                     this.element.imgs.forEach(item => {
-                        item.style.width = item.style.width + 'px'
-                        item.style.height = item.style.height + 'px'
+                        // if (typeof (item.style.width) == 'number' && typeof (item.style.height) == 'number') {
+                            item.style.width = item.style.width + 'px'
+                            item.style.height = item.style.height + 'px'
+                        // }
                     })
                 }
             } else {
-                this.element.style.width = this.element.style.width + 'px'
-                this.element.style.height = this.element.style.height + 'px'
+                // if (typeof (this.element.style.width) == 'number' && typeof (this.element.style.height) == 'number') {
+                    this.element.style.width = this.element.style.width + 'px'
+                    this.element.style.height = this.element.style.height + 'px'
+                // }
             }
         }
     },

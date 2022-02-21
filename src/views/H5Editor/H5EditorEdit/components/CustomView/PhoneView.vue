@@ -7,7 +7,7 @@
             color: editItem.style.color,
             background: editItem.style.background,
             borderRadius: editItem.style.borderRadius + 'px',
-            opacity: editItem.style.opacity,
+            opacity: editItem.style.opacity + '%',
             fontSize: editItem.style.fontSize + 'px'
     }">{{ editItem.label }}</div>
   </div>

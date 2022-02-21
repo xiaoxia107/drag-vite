@@ -32,6 +32,11 @@ export default {
             name: ''
         }
     },
+    watch: {
+        appName (n) {
+            this.name = n
+        }
+    },
     methods: {
         changeAppName () {
             this.$emit('update:appName', this.name)

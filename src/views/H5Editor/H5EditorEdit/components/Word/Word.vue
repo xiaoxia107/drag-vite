@@ -1,6 +1,14 @@
 <template>
     <div class="word">
-        <el-input :class="classes[editItem.value].class" ref="input" :autosize="true" type="textarea" v-model="label"  resize="none" @click.stop></el-input>
+        <el-input :class="classes[editItem.value].class" ref="input" :style="{
+            color: editItem.style.color,
+            fontWeight:editItem.style.fontWeight,
+            fontSize: editItem.style.fontSize + 'px',
+            fontFamily:editItem.style.fontFamily,
+            fontStyle:editItem.style.fontStyle,
+            textDecoration:editItem.style.textDecoration,
+            }" :autosize="true" type="textarea" v-model="label" resize="none" @click.stop>
+        </el-input>
     </div>
 </template>
 

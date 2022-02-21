@@ -27,7 +27,7 @@
                             width: bgItem.style.width + 'px',
                             height: bgItem.style.height + 'px',
                             backgroundColor: bgItem.style.backgroundColor,
-                            backgroundImage: bgItem.style.backgroundImage,
+                            backgroundImage: `url(${bgItem.style.backgroundImage})`,
                          }"
                          @click.stop="handleBgImg"
                          :class="((curEditItem && curEditItem.id) == bgItem.id) ? 'curitem' : ''">

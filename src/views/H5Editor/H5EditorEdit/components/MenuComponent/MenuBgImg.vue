@@ -10,7 +10,7 @@
             @click="changeBgColor(color)">
       </div>
     </div>
-    <el-button class="w100" type="primary">上传背景图片</el-button>
+    <el-button class="w100" type="primary" @click="uploadBgImg">上传背景图片</el-button>
   </div>
   <div class="bgAllImg">
     <el-tabs v-model="activeName" @tab-click="handleTabClick">
@@ -23,7 +23,7 @@
         class="bgSearchInput"
         placeholder="搜索您想要的图片"
         suffix-icon="el-icon-search"
-        v-model="searchForm.name">
+        v-model="searchForm.videoName">
       </el-input>
     </div>
     <div>
@@ -32,11 +32,14 @@
       </vuedraggable>
     </div>
   </div>
+  <input style="display: none" ref="form" type="file" class="fileHidden" @change="changeUpload($event)" />
 </div>
 </template>
 
 <script>
 import vuedraggable from 'vuedraggable'
+import { filesAnon, getBgPrivatePage, uploadPrivateBackground } from '@/apiModules/apiMethods/h5editor/index'
+
 export default {
     name: 'BgImgOption',
     props: {
@@ -49,7 +52,7 @@ export default {
         return {
             activeName: '1',
             searchForm: {
-                name: ''
+                videoName: '',
             },
             bgImgList: [
                 {
@@ -73,11 +76,69 @@ export default {
         }
     },
     methods: {
-        handleTabClick () {},
+        changeUpload (event) {
+            let file = event.target.files[0]
+            this.setValue(file)
+            this.resetInputForm()
+        },
+        setValue (file) {
+            let fileType = 'png|jpg|jpeg'
+            let fileSize = 2
+            const fileExt = file.name.split('.').pop().toLocaleLowerCase()
+            const extArr = fileType.split('|')
+            const isAcceptExt = extArr.some(item => {
+                return item === fileExt
+            })
+            const isLt2M = file.size / 1024 / 1024 < fileSize
+
+            if (!isAcceptExt) {
+                this.$message.error(`只能是${fileType}格式!`)
+            }
+            if (!isLt2M) {
+                this.$message.error(`大小不能超过 ${fileSize}MB!`)
+            }
+            if (isAcceptExt && isLt2M) {
+                let fd = new FormData()
+                fd.append('file', file)
+                filesAnon(fd).then(res => {
+                    this.bgItem.style.backgroundImage = res.url
+                    let params = {
+                        imageName: file.name,
+                        imageSize: fileSize,
+                        imageUrl: res.url
+                    }
+                    uploadPrivateBackground(params).then(() => {
+                        this.$messeage.success('上传成功')
+                    })
+                    console.log('this.bgItem', this.bgItem)
+                })
+            }
+        },
+        resetInputForm () {
+            if (this.$refs['form']) {
+                this.$refs['form'].value = ''
+            }
+        },
+        handleTabClick () {
+            this.getImgList()
+        },
         changeBgColor (value) {
-            console.log('this.bgItem', this.bgItem)
             this.bgItem.style.backgroundColor = value
         },
+        uploadBgImg () {
+            this.$refs['form'].click()
+        },
+        getImgList () {
+            getBgPrivatePage({
+                type: this.activeName,
+                ...this.searchForm
+            }).then(res => {
+                this.bgImgList = res.data.records
+            })
+        }
+    },
+    mounted () {
+        this.getImgList()
     }
 }
 </script>

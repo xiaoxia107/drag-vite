@@ -5,6 +5,7 @@
       <video v-if="editItem.value == 1"
              class="h5custom-video"
              controls
+             :autoplay="false"
              :width="editItem.w"
              :height="editItem.h"
              :src="editItem.customSrc"></video>
